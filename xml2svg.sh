@@ -18,6 +18,9 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+echo "🔧 Fixing unsupported MusicXML modes..."
+sed 's/\\none/\\major/g' "$LY_FILE" > tmp.ly && mv tmp.ly "$LY_FILE"
+
 echo "🧹 Stripping metadata (title, composer, tagline)..."
 cat << 'EOF' >> "$LY_FILE"
 
@@ -41,6 +44,6 @@ fi
 
 echo "🗑️ Cleaning up intermediate files..."
 rm "$LY_FILE"
-rm "${BASENAME}.svg"
+rm "${BASENAME}.svg" 
 
 echo "✅ Success! Your clean, cropped SVG is ready: ${BASENAME}.cropped.svg"
